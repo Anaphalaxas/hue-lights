@@ -118,6 +118,11 @@ class Skill_Hue:
             self.queue.put(self.shift_up(hermes, intent_message, rooms))
         if intent_name == 'shiftDown':
             self.queue.put(self.shift_down(hermes, intent_message, rooms))
+        if intent_name == "reset":
+            self.queue.put(self.reset_lights(hermes, intent_message, rooms))
+    def reset_lights(self, hermes, intent_message, rooms):
+        self.snipshue.reset_all()
+        self.terminate_feedback(hermes, intent_message)
 
     def turn_on(self, hermes, intent_message, rooms):
         if len(rooms) > 0:
