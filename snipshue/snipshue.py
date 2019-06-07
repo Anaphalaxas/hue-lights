@@ -42,7 +42,12 @@ class SnipsHue:
         if self.roomName_roomId.get(room) is None:
             return
         print ("[HUE] turn on")
-        self._put_group_state({"on": True, "bri": 200, "hue": 39392,"sat": 13}, self.roomName_roomId[room])
+        self._put_group_state({"on": True, "bri": 254, "ct": 369}, self.roomName_roomId[room])
+
+    def reset_all(self):
+        for room in self.roomName_roomId.keys():
+            self._put_group_state({"on": True, "bri": 254, "ct": 369}, self.roomName_roomId[room])
+
 
     def light_on_all(self):
         for room in self.roomName_roomId.keys():
@@ -68,7 +73,7 @@ class SnipsHue:
 
     def light_brightness_all(self, percent):
         for room in self.roomName_roomId.keys():
-           self.light_brightness(percent, room) 
+           self.light_brightness(percent, room)
 
     def light_color(self, color_code, room):
         if self.roomName_roomId.get(room) is None:
@@ -81,7 +86,7 @@ class SnipsHue:
         if self._is_group_on(group_id):
             self._put_group_state({"on": True, "sat": sat, "hue": hue}, group_id)
         else:
-            self._put_group_state({"on": True, "bri": 200, "sat": sat, "hue": hue}, group_id)
+            self._put_group_state({"on": True, "bri": 254, "sat": sat, "hue": hue}, group_id)
 
     def light_color_all(self, color_code):
         for room in self.roomName_roomId.keys():
@@ -95,13 +100,13 @@ class SnipsHue:
         bri = int(scene_code.split('x')[0])
         hue = int(scene_code.split('x')[1])
         sat = int(scene_code.split('x')[2])
-        
+
         self._put_group_state({"on": True, "bri":bri, "hue":hue, "sat":sat}, self.roomName_roomId[room])
 
     def light_scene_all(self, scene_code):
         for room in self.roomName_roomId.keys():
             self.light_scene(scene_code, room)
-    
+
     def light_up(self, percent, room):
         if self.roomName_roomId.get(room) is None:
             return
@@ -119,13 +124,13 @@ class SnipsHue:
             new_bri = 254
         if new_bri < 0:
             new_bri = 0
- 
+
         self._put_group_state({"on": True, "bri": new_bri}, self.roomName_roomId[room])
 
     def light_up_all(self, percent):
         for room in self.roomName_roomId.keys():
             self.light_up(percent, room)
-        
+
     def light_down(self, percent, room):
         if self.roomName_roomId.get(room) is None:
             return
@@ -142,7 +147,7 @@ class SnipsHue:
             new_bri = 254
         if new_bri < 0:
             new_bri = 0
- 
+
         self._put_group_state({"on": True, "bri": new_bri}, self.roomName_roomId[room])
 
     def light_down_all(self, percent):
